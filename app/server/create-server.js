@@ -1,5 +1,4 @@
 const hapi = require('@hapi/hapi')
-const Vision = require('@hapi/vision')
 const HapiSwagger = require('hapi-swagger')
 const Pack = require('../../package')
 
@@ -32,12 +31,12 @@ const createServer = async () => {
   await server.register(require('./plugins/router'))
   await server.register(require('./plugins/logging'))
   if (serverConfig.isDev) {
-    // await server.register(require('blipp'))
-    // await server.register(Vision,
-    //  {
-    //    plugin: HapiSwagger,
-    //    options: swaggerOptions
-    //  })
+    await server.register(require('blipp'))
+    await server.register(require('@hapi/vision'))
+    await server.register({
+      plugin: HapiSwagger,
+      options: swaggerOptions
+    })
   }
 
   return server

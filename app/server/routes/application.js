@@ -4,6 +4,9 @@ module.exports = [{
   method: 'GET',
   path: '/applications/{applicationReference}',
   options: {
+    description: 'Get todo',
+    notes: 'Returns a todo item by the id passed in the path',
+    tags: ['api'],
     validate: {
       params: Joi.object({
         applicationReference: Joi.string().valid()
