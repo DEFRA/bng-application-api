@@ -1,5 +1,5 @@
 services:
-  ffc-template-node:
+  bng-application-api:
     command: >
       sh -c "npm run test:watch"
     volumes:

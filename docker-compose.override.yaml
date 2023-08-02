@@ -2,14 +2,23 @@
 # to provide dependencies and expose ports for local testing
 
 services:
-  ffc-template-node:
+  bng-application-api:
     build:
       target: development
-    image: ffc-template-node-development
-    container_name: ffc-template-node-development
+    image: bng-application-api-development
+    container_name: bng-application-api-development
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - "3001:3000"
+      - "9230:9229"
     volumes:
       - ./app:/home/node/app
       - ./package.json:/home/node/package.json
+
+  bng-application-api-postgres:
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
