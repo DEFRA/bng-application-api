@@ -22,7 +22,7 @@ const createServer = async () => {
   const swaggerOptions = {
     info: {
       title: 'Test API Documentation',
-      version: '1.0'
+      version: Pack.version
     }
   }
 
