@@ -4,7 +4,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
-  <include file="changelog/db.changelog-1.0.xml" />
-  <include file="changelog/db.changelog-1.1.xml" />
-  <include file="changelog/db.changelog-1.2.xml" />
+  <changeSet author="Shaun Fitzsimons" id="1">
+    <tagDatabase tag="v1.0.0" />
+  </changeSet>
+  <changeSet author="Shaun Fitzsimons" id="2">
+    <sql dbms="postgresql" endDelimiter=";" splitStatements="true" stripComments="true">CREATE EXTENSION IF NOT EXISTS "uuid-ossp"
+    <comment>Install UUID Extension</comment></sql>
+  </changeSet>
 </databaseChangeLog>

@@ -10,7 +10,7 @@ services:
     environment:
       APPINSIGHTS_CLOUDROLE: bng-application-api-local
       APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}
-      POSTGRES_DB: bng-application-api
+      POSTGRES_DB: bng_application_api
       POSTGRES_HOST: ${POSTGRES_HOST:-bng-application-api-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
       POSTGRES_PORT: 5432

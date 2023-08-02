@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { get } = require('../../repositories/application-session')
 
 module.exports = [{
   method: 'GET',
@@ -19,11 +20,19 @@ module.exports = [{
         return h.response('error').code(400).takeover()
       }
     },
-    handler: (request, h) => {
+    handler: async (request, h) => {
       console.log(request.params)
       console.log(request.query)
-      const applicationReference = request.params.ref
-      return h.response(applicationReference).code(200)
+      const applicationReference = request.params.applicationReference
+      const email = request.query.email
+
+      const response = await get(applicationReference, email)
+
+      if (response === null) {
+        return h.response().code(204)
+      }
+
+      return h.response(response).code(200)
     }
   }
 },
