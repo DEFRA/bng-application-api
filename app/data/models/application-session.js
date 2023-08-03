@@ -20,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     applicationSession: {
       type: DataTypes.JSONB,
-      field: 'application_session',
-      set (val) {
-        this.setDataValue('application_session', val.toUpperCase())
-      }
+      field: 'application_session'
     },
     createdAt: {
       field: 'created_at',

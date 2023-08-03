@@ -1,6 +1,7 @@
 const Joi = require('joi')
-const { get } = require('../../repositories/application-session')
+const { get, put } = require('../../repositories/application-session')
 const createSchema = require('./schemas/create-application')
+const updateSchema = require('./schemas/update-application')
 
 module.exports = [{
   method: 'GET',
@@ -52,6 +53,7 @@ module.exports = [{
         return h.response('Error').code(500).takeover()
       }
     },
+    tags: ['api'],
     handler: (request, h) => {
       return h.response('ok').code(200)
     }
@@ -90,14 +92,23 @@ module.exports = [{
       query: Joi.object({
         email: Joi.string().email().valid()
       }),
+      payload: Joi.object().concat(updateSchema),
       failAction (request, h, err) {
         return h.response('error').code(400).takeover()
       }
     },
-    handler: (request, h) => {
+    tags: ['api'],
+    handler: async (request, h) => {
       const applicationReference = request.params.applicationReference
       const email = request.query.email
-      return h.response({ applicationReference, email }).code(200)
+
+      const res = await put(applicationReference, email, request.payload)
+
+      if (res === null) {
+        return h.response().code(404)
+      }
+
+      return h.response(applicationReference).code(200)
     }
   }
 }]
