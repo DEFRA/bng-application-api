@@ -32,7 +32,18 @@ const put = async (applicationReference, email, payload) => {
   })
 }
 
+const remove = async (applicationReference, email) => {
+  const session = await get(applicationReference, email)
+
+  if (session === null) {
+    return null
+  }
+
+  return session.destroy()
+}
+
 module.exports = {
   get,
-  put
+  put,
+  remove
 }

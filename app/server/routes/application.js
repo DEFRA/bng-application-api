@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { get, put } = require('../../repositories/application-session')
+const { get, put, remove } = require('../../repositories/application-session')
 const createSchema = require('./schemas/create-application')
 const updateSchema = require('./schemas/update-application')
 
@@ -74,9 +74,17 @@ module.exports = [{
         return h.response('error').code(400).takeover()
       }
     },
-    handler: (request, h) => {
+    tags: ['api'],
+    handler: async (request, h) => {
       const applicationReference = request.params.applicationReference
       const email = request.query.email
+
+      const res = await remove(applicationReference, email)
+
+      if (res === null) {
+        return h.response().code(404)
+      } 
+
       return h.response({ applicationReference, email }).code(200)
     }
   }
