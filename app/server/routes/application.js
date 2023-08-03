@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { get } = require('../../repositories/application-session')
+const createSchema = require('./schemas/create-application')
 
 module.exports = [{
   method: 'GET',
@@ -21,11 +22,8 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      console.log(request.params)
-      console.log(request.query)
       const applicationReference = request.params.applicationReference
       const email = request.query.email
-
       const response = await get(applicationReference, email)
 
       if (response === null) {
@@ -46,8 +44,17 @@ module.exports = [{
 {
   method: 'POST',
   path: '/applications',
-  handler: (request, h) => {
-    return h.response('ok').code(200)
+  options: {
+    validate: {
+      payload: Joi.object().concat(createSchema),
+      failAction: async (request, h, err) => {
+        console.log(err)
+        return h.response('Error').code(500).takeover()
+      }
+    },
+    handler: (request, h) => {
+      return h.response('ok').code(200)
+    }
   }
 },
 {
@@ -66,8 +73,9 @@ module.exports = [{
       }
     },
     handler: (request, h) => {
-      const applicationReference = request.params.ref
-      return h.response(applicationReference).code(200)
+      const applicationReference = request.params.applicationReference
+      const email = request.query.email
+      return h.response({ applicationReference, email }).code(200)
     }
   }
 },
@@ -87,8 +95,9 @@ module.exports = [{
       }
     },
     handler: (request, h) => {
-      const applicationReference = request.params.ref
-      return h.response(applicationReference).code(200)
+      const applicationReference = request.params.applicationReference
+      const email = request.query.email
+      return h.response({ applicationReference, email }).code(200)
     }
   }
 }]
