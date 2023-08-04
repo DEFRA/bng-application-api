@@ -1,5 +1,6 @@
 const { models } = require('../data')
 const merge = require('lodash.merge');
+const generateReference = require('../lib/create-reference')
 
 const get = async (applicationReference, email) => {
   return models.application_session.findOne({
@@ -7,6 +8,16 @@ const get = async (applicationReference, email) => {
       reference: applicationReference,
       email
     }
+  })
+}
+
+const post = async (payload) => {
+  return models.application_session.create({
+    reference: generateReference(),
+    email: payload.landownerGainSiteRegistration.applicant.emailAddress,
+    applicationSession: payload,
+    createdAt: Date.now(),
+    updatedAt: Date.now()
   })
 }
 
@@ -44,6 +55,7 @@ const remove = async (applicationReference, email) => {
 
 module.exports = {
   get,
+  post,
   put,
   remove
 }

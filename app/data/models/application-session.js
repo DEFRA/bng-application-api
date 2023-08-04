@@ -7,10 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: sequelize.UUIDV4
     },
     reference: {
-      type: DataTypes.STRING(20),
-      set (val) {
-        this.setDataValue('reference', val.toUpperCase())
-      }
+      type: DataTypes.STRING(20)
     },
     email: {
       type: DataTypes.STRING,
