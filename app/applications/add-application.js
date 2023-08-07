@@ -1,8 +1,8 @@
 const { models } = require('../data')
-const generateReference = require('../lib/create-reference')
+const { generate } = require('../lib/create-reference')
 
 const create = async (payload) => {
-  const reference = generateReference()
+  const reference = generate()
   const email = payload?.landownerGainSiteRegistration?.applicant?.emailAddress
 
   return models.application_session.create({
