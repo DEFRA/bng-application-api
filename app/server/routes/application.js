@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { get, post, put, remove } = require('../../repositories/application-session')
+const { get, create, update, remove } = require('../../applications')
 const createSchema = require('./schemas/create-application')
 const updateSchema = require('./schemas/update-application')
 
@@ -55,7 +55,7 @@ module.exports = [{
     },
     tags: ['api'],
     handler: async (request, h) => {
-      await post(request.payload)
+      await create(request.payload)
       return h.response('ok').code(200)
     }
   }
@@ -84,7 +84,7 @@ module.exports = [{
 
       if (res === null) {
         return h.response().code(404)
-      } 
+      }
 
       return h.response({ applicationReference, email }).code(200)
     }
@@ -111,7 +111,7 @@ module.exports = [{
       const applicationReference = request.params.applicationReference
       const email = request.query.email
 
-      const res = await put(applicationReference, email, request.payload)
+      const res = await update(applicationReference, email, request.payload)
 
       if (res === null) {
         return h.response().code(404)

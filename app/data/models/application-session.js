@@ -33,6 +33,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'application_session',
     underscored: true
   })
-  
+
   return applicationSession
 }
