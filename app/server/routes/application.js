@@ -12,14 +12,13 @@ module.exports = [{
     tags: ['api'],
     validate: {
       params: Joi.object({
-        applicationReference: Joi.string().valid()
+        applicationReference: Joi.string().valid().required()
       }),
       query: Joi.object({
-        email: Joi.string().email().valid()
+        email: Joi.string().email().valid().required()
       }),
-      failAction (request, h, err) {
-        console.log(err)
-        return h.response('error').code(400).takeover()
+      failAction: (request, h, err) => {
+        return h.response().code(400).takeover()
       }
     },
     handler: async (request, h) => {
@@ -28,7 +27,7 @@ module.exports = [{
       const response = await get(applicationReference, email)
 
       if (response === null) {
-        return h.response().code(204)
+        return h.response().code(404)
       }
 
       return h.response(response).code(200)
@@ -48,9 +47,8 @@ module.exports = [{
   options: {
     validate: {
       payload: Joi.object().concat(createSchema),
-      failAction: async (request, h, err) => {
-        console.log(err)
-        return h.response('Error').code(500).takeover()
+      failAction: (request, h, err) => {
+        return h.response('error').code(400).takeover()
       }
     },
     tags: ['api'],
@@ -66,12 +64,12 @@ module.exports = [{
   options: {
     validate: {
       params: Joi.object({
-        applicationReference: Joi.string().valid()
+        applicationReference: Joi.string().valid().required()
       }),
       query: Joi.object({
-        email: Joi.string().email().valid()
+        email: Joi.string().email().valid().required()
       }),
-      failAction (request, h, err) {
+      failAction: (request, h, err) => {
         return h.response('error').code(400).takeover()
       }
     },
@@ -96,13 +94,13 @@ module.exports = [{
   options: {
     validate: {
       params: Joi.object({
-        applicationReference: Joi.string().valid()
+        applicationReference: Joi.string().valid().required()
       }),
       query: Joi.object({
-        email: Joi.string().email().valid()
+        email: Joi.string().email().valid().required()
       }),
       payload: Joi.object().concat(updateSchema),
-      failAction (request, h, err) {
+      failAction: (request, h, err) => {
         return h.response('error').code(400).takeover()
       }
     },
