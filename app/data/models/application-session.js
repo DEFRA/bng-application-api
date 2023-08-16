@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       field: 'updated_at',
       type: DataTypes.DATE
+    },
+    date_of_expiry_notification: {
+      field: 'date_of_expiry_notification',
+      type: DataTypes.DATE
     }
   },
   {

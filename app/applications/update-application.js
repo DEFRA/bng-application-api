@@ -11,8 +11,6 @@ const update = async (applicationReference, email, payload) => {
 
   const session = merge(currentSession.dataValues.applicationSession, payload)
 
-  console.log(session)
-
   return models.application_session.update({
     applicationSession: session,
     updatedAt: Date.now()

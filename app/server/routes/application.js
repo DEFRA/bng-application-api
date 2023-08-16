@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { get, create, update, remove } = require('../../applications')
+const { get, create, update, remove, expire } = require('../../applications')
 const createSchema = require('./schemas/create-application')
 const updateSchema = require('./schemas/update-application')
 
@@ -35,10 +35,19 @@ module.exports = [{
   }
 },
 {
-  method: 'GET',
-  path: '/applications/expiring',
-  handler: (request, h) => {
-    return h.response('ok').code(200)
+  method: 'PUT',
+  path: '/applications/expire',
+  options: {
+    description: 'Expire applications that have passed 28 days',
+    notes: 'Returns number of applications have been expired',
+    tags: ['api'],
+  },
+  handler: async (request, h) => {
+    const response = await expire()
+
+    console.log(`Applications expired: ${response[0]}`)
+
+    return h.response().code(200)
   }
 },
 {
