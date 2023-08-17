@@ -12,7 +12,10 @@ const expire = async () => {
     {
       where: {
         created_at: {
-          [Op.lte]: expireDate
+          [Op.lte]: expireDate,
+        },
+        date_of_expiry_notification: {
+          [Op.eq]: null
         }
       }
     })
